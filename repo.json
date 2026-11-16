@@ -1,0 +1,23 @@
+{
+  "name": "Comics for Harbor",
+  "plugins": [
+    {
+      "id": "readcomiconline",
+      "name": "ReadComicOnline",
+      "version": "1.0.0",
+      "lang": "en",
+      "nsfw": false,
+      "icon": "https://readcomiconline.li/favicon.ico",
+      "entry": "readcomiconline.plugin.js"
+    },
+    {
+      "id": "comicextra",
+      "name": "ComicExtra",
+      "version": "1.0.0",
+      "lang": "en",
+      "nsfw": false,
+      "icon": "https://comicextra.org/favicon.ico",
+      "entry": "comicextra.plugin.js"
+    }
+  ]
+}

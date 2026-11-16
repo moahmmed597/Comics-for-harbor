@@ -1,14 +1,30 @@
-# Comics for Harbor 📚
+# Comics for Harbor (عربي + English) 🦸‍♂️📖
 
-A custom Harbor repository providing Comic sources (Marvel, DC, Indie, Dark Horse, etc.).
+مستودع إضافات كوميكس لتطبيق **Harbor** يحتوي على أشهر مواقع الكوميكس العربية المترجمة ومواقع الكوميكس الإنجليزية والعالمية (DC, Marvel, Indie).
 
-## 🚀 How to add to Harbor:
+---
 
-1. Open **Harbor**.
-2. Go to **Plugins** ➔ **Plugin repositories**.
-3. Paste this URL into **Repository link**:
-   ```text
-   https://raw.githubusercontent.com/<YOUR_GITHUB_USERNAME>/comics-for-harbor/main/repo.json
-   ```
-4. Click **Add**.
-5. Click **Install** next to the comic sources you want.
+## 🌟 المصادر المتاحة (Sources Included)
+
+### 🟢 المصادر العربية (Arabic Sources):
+* **عرب كوميكس فيرس (ArComixVerse):** ترجمات سلاسل دي سي ومارفل والكوميكس المستقل.
+* **عرب كوميكس (ArabComics):** أكبر أرشيف عربي لكوميكس دي سي، مارفل، تان تان، والكوميكس الأوروبي.
+* **باتكيف (Batcave):** موقع متخصص في ترجمة قصص باتمان وعالم DC ومارفل.
+
+### 🔵 المصادر الإنجليزية (English Sources):
+* **GlobalComix:** منصة الكوميكس والويب كوميكس العالمية.
+* **GetComics:** البوابة الأضخم عالمياً لإصدارات وأعداد الكوميكس اليومية.
+* **ComicExtra:** قراءة أعداد مارفل ودي سي مباشرة بدون تحميل.
+
+---
+
+## 🚀 طريقة التثبيت في تطبيق Harbor:
+
+1. افتح تطبيق **Harbor**.
+2. توجّه إلى القائمة اليسرى ثم: **Plugins** ➔ **Plugin repositories**.
+3. في خانة **Repository link**، الصق هذا الرابط:
+```text
+https://raw.githubusercontent.com/moahmmed597/Comics-for-harbor/main/repo.json
+```
+4. اضغط على زر **Add**.
+5. ستظهر لك قائمة المستودع باسم **Comics for Harbor (عربي + إنجليزي)**، اضغط على السهم الصغير واختر **Install** بجانب أي موقع تريده!

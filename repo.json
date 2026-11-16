@@ -1,18 +1,54 @@
 {
-  "name": "Comics for Harbor",
+  "name": "Comics for Harbor (عربي + إنجليزي)",
   "plugins": [
     {
-      "id": "readcomiconline",
-      "name": "ReadComicOnline",
+      "id": "arcomixverse",
+      "name": "ArComixVerse (عربي)",
+      "version": "1.0.0",
+      "lang": "ar",
+      "nsfw": false,
+      "icon": "https://arcomixverse.blogspot.com/favicon.ico",
+      "entry": "arcomixverse.plugin.js"
+    },
+    {
+      "id": "arabcomics",
+      "name": "عرب كوميكس (ArabComics)",
+      "version": "1.0.0",
+      "lang": "ar",
+      "nsfw": false,
+      "icon": "https://arabcomics.net/wp-content/uploads/2024/01/logo-300x290-1.png",
+      "entry": "arabcomics.plugin.js"
+    },
+    {
+      "id": "batcave",
+      "name": "باتكيف (Batcave - عربي)",
+      "version": "1.0.0",
+      "lang": "ar",
+      "nsfw": false,
+      "icon": "https://batcave.biz/favicon.ico",
+      "entry": "batcave.plugin.js"
+    },
+    {
+      "id": "globalcomix",
+      "name": "GlobalComix (English)",
       "version": "1.0.0",
       "lang": "en",
       "nsfw": false,
-      "icon": "https://readcomiconline.li/favicon.ico",
-      "entry": "readcomiconline.plugin.js"
+      "icon": "https://globalcomix.com/favicon.ico",
+      "entry": "globalcomix.plugin.js"
+    },
+    {
+      "id": "getcomics",
+      "name": "GetComics (English)",
+      "version": "1.0.0",
+      "lang": "en",
+      "nsfw": false,
+      "icon": "https://getcomics.org/favicon.ico",
+      "entry": "getcomics.plugin.js"
     },
     {
       "id": "comicextra",
-      "name": "ComicExtra",
+      "name": "ComicExtra (English)",
       "version": "1.0.0",
       "lang": "en",
       "nsfw": false,

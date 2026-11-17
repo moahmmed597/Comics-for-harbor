@@ -1,70 +1,79 @@
 {
   "name": "Harbor Priority Western & Arabic Comics",
   "author": "moahmmed597",
-  "description": "100% verified Western & Arabic comics repository for Harbor with guaranteed image loading on Samsung TV and PC. DC, Marvel, Batman, Spider-Man, Ben 10, Invincible, Graphic Novels.",
+  "description": "100% verified Western & Arabic comics repository for Harbor with guaranteed image loading on Samsung TV and PC. Arabic translations (DC, Marvel, Batman, Spider-Man, Ben 10, Invincible) and pure English Western comics (OceComic & Western Heroes).",
   "plugins": [
     {
       "id": "arcomixverse",
-      "name": "ArComixVerse (كل الكوميكس)",
-      "version": "3.3.0",
+      "name": "ArComixVerse (كل الكوميكس - عربي)",
+      "version": "3.4.0",
       "lang": "ar",
       "nsfw": false,
       "entry": "arcomixverse.plugin.js",
       "description": "المكتبة الشاملة لجميع أعداد وسلاسل الكوميكس المترجمة (مارفل، دي سي، بن 10، انفينسيبل)"
     },
     {
-      "id": "cbia",
-      "name": "الكوميكس بالعربية (Arabic Comics)",
-      "version": "3.3.0",
-      "lang": "ar",
-      "nsfw": false,
-      "entry": "cbia.plugin.js",
-      "description": "موقع الكوميكس بالعربية: روايات وملاحم كاملة (النكتة القاتلة، ليالي مظلمة، فينوم ريكس، وأفنجرز)"
-    },
-    {
       "id": "dccomics",
-      "name": "DC Comics (دي سي)",
-      "version": "3.3.0",
+      "name": "DC Comics (دي سي - عربي)",
+      "version": "3.4.0",
       "lang": "ar",
       "nsfw": false,
       "entry": "dccomics.plugin.js",
-      "description": "كوميكس دي سي الكاملة: أبسولوت باتمان، سوبرمان، فلاش، جستس ليج، ونايت وينج"
+      "description": "كوميكس دي سي الكاملة مترجمة: أبسولوت باتمان، سوبرمان، فلاش، جستس ليج، ونايت وينج"
     },
     {
       "id": "marvel",
-      "name": "Marvel Comics (مارفل)",
-      "version": "3.3.0",
+      "name": "Marvel Comics (مارفل - عربي)",
+      "version": "3.4.0",
       "lang": "ar",
       "nsfw": false,
       "entry": "marvel.plugin.js",
-      "description": "كوميكس مارفل الكاملة: أفنجرز، سبايدرمان، وولفرين، إكس مين، ودكتور دوم"
+      "description": "كوميكس مارفل الكاملة مترجمة: أفنجرز، سبايدرمان، وولفرين، إكس مين، ودكتور دوم"
     },
     {
       "id": "batman",
-      "name": "Batman Universe (عالم باتمان)",
-      "version": "3.3.0",
+      "name": "Batman Universe (عالم باتمان - عربي)",
+      "version": "3.4.0",
       "lang": "ar",
       "nsfw": false,
       "entry": "batman.plugin.js",
-      "description": "أرشيف باتمان الشامل: Absolute Batman، باتمان 2025، وDetective Comics"
+      "description": "أرشيف باتمان الشامل مترجم: Absolute Batman، باتمان 2025، وDetective Comics"
     },
     {
       "id": "spiderman",
-      "name": "Spider-Man Collection (سبايدرمان)",
-      "version": "3.3.0",
+      "name": "Spider-Man Collection (سبايدرمان - عربي)",
+      "version": "3.4.0",
       "lang": "ar",
       "nsfw": false,
       "entry": "spiderman.plugin.js",
-      "description": "سلاسل سبايدرمان الكاملة: The Amazing Spider-Man وUltimate Spider-Man"
+      "description": "سلاسل سبايدرمان الكاملة مترجمة: The Amazing Spider-Man وUltimate Spider-Man"
     },
     {
       "id": "indie",
-      "name": "Indie & Sci-Fi (سلاسل وأبطال)",
-      "version": "3.3.0",
+      "name": "Indie & Sci-Fi (سلاسل وأبطال - عربي)",
+      "version": "3.4.0",
       "lang": "ar",
       "nsfw": false,
       "entry": "indie.plugin.js",
-      "description": "سلاسل مستقلة وخيال علمي: بن 10 (Ben 10 2026)، انفينسيبل (Invincible)، والموتى السائرون"
+      "description": "سلاسل مستقلة وخيال علمي مترجمة: بن 10 (Ben 10 2026)، انفينسيبل (Invincible)، والموتى السائرون"
+    },
+    {
+      "id": "ocecomic",
+      "name": "OceComic (English Comics)",
+      "version": "3.4.0",
+      "lang": "en",
+      "nsfw": false,
+      "entry": "ocecomic.plugin.js",
+      "description": "Comprehensive Western comics in original English: Marvel, DC, Image, Dark Horse, Avatar Press"
+    },
+    {
+      "id": "ocecomic-superhero",
+      "name": "Western Heroes (English Superheroes)",
+      "version": "3.4.0",
+      "lang": "en",
+      "nsfw": false,
+      "entry": "ocecomic-superhero.plugin.js",
+      "description": "Popular Marvel, DC and superhero comic book runs in original English with full pages"
     }
   ]
 }

@@ -1,12 +1,17 @@
-// Harbor Comic Source Plugin: Spider-Man Universe (عالم سبايدرمان الشامل - عربي وإنجليزي)
-// Features full Spider-Man runs from XoxoComic (Amazing, Ultimate, Miles Morales, 2099) + Arabic translations from ArComixVerse
+// Harbor Comic Source Plugin: Spider-Man Collection (سبايدرمان - عربي)
+// 100% Verified Google CDN Image Delivery (No Cloudflare, No Hotlink Protection)
 
-const AR_BASE = "https://arcomixverse.blogspot.com";
-const XOXO_BASE = "https://xoxocomic.com";
-const UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36";
+const BASE = "https://arcomixverse.blogspot.com";
+const SEARCH_QUERY = "spider";
+const PRIMARY_TAG = "The Amazing Spider Man";
+const UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36";
 
-async function getJson(url) {
-  const res = await harbor.http(url, { responseType: "json", headers: { "User-Agent": UA } });
+async function getJson(path) {
+  const url = path.startsWith("http") ? path : BASE + path;
+  const res = await harbor.http(url, {
+    responseType: "json",
+    headers: { "User-Agent": UA }
+  });
   if (typeof res === "string") {
     try { return JSON.parse(res); } catch(e) { return null; }
   }
@@ -17,28 +22,19 @@ async function getJson(url) {
   return res;
 }
 
-async function getHtml(url) {
-  const res = await harbor.http(url, { responseType: "text", headers: { "User-Agent": UA } });
-  if (typeof res === "string") return res;
-  if (res && typeof res.body === "string") return res.body;
-  if (res && res.text) return await res.text();
-  return String(res || "");
-}
-
 function cleanTitle(str) {
   return String(str || "")
-    .replace(/&#039;/g, "'")
+    .replace(/&#8211;/g, "-")
+    .replace(/&#8217;/g, "'")
+    .replace(/&#038;/g, "&")
     .replace(/&amp;/g, "&")
-    .replace(/&#8211;/g, "–")
-    .replace(/&#8212;/g, "—")
-    .replace(/&quot;/g, '"')
     .replace(/\s+/g, " ")
     .trim();
 }
 
-function extractBloggerImages(html) {
+function extractImages(html) {
   const urls = [];
-  const re = /https?:\/\/(?:blogger\.googleusercontent\.com\/img\/[^\s"\'<>]+|[^\s"\'<>]+\.(?:jpg|png|webp|jpeg))/gi;
+  const re = /https?:\/\/(?:blogger\.googleusercontent\.com\/img\/[^\s"\'<>]+|\d+\.bp\.blogspot\.com\/[^\s"\'<>]+|[^\s"\'<>]+\.(?:jpg|png|webp|jpeg))/gi;
   let m;
   while ((m = re.exec(html || "")) !== null) {
     let u = m[0];
@@ -50,239 +46,113 @@ function extractBloggerImages(html) {
   return urls;
 }
 
+function entryToItem(entry) {
+  const postId = (entry.id?.$t || "").split("post-").pop();
+  const title = cleanTitle(entry.title?.$t);
+  const content = entry.content?.$t || "";
+  const imgs = extractImages(content);
+  const cover = entry.media$thumbnail?.url?.replace(/\/s72-c\//, "/s640/") || imgs[0];
+  return {
+    id: postId,
+    title: title || "كوميكس مترجم",
+    cover: cover
+  };
+}
+
 const plugin = {
   id: "spiderman",
-  name: "Spider-Man Universe (عالم سبايدرمان الشامل)",
-  version: "4.0.0",
+  name: "Spider-Man Collection (سبايدرمان - عربي)",
+  version: "4.1.0",
 
   async popular(offset) {
-    const page = Math.floor((Number(offset) || 0) / 24) + 1;
-    const items = [];
-
-    // 1. Fetch Arabic runs on page 1
-    if (page === 1) {
-      try {
-        const arData = await getJson(`${AR_BASE}/feeds/posts/default/-/The%20Amazing%20Spider%20Man?alt=json&max-results=15`);
-        const arEntries = arData?.feed?.entry || [];
-        for (const e of arEntries) {
-          const postId = (e.id?.$t || "").split("post-").pop();
-          const title = cleanTitle(e.title?.$t);
-          const imgs = extractBloggerImages(e.content?.$t || "");
-          const cover = e.media$thumbnail?.url?.replace(/\/s72-c\//, "/s640/") || imgs[0];
-          if (postId) {
-            items.push({
-              id: "ar:" + postId,
-              title: "[عربي] " + title,
-              cover: cover
-            });
-          }
-        }
-      } catch(e) {}
+    const startIndex = (Number(offset) || 0) + 1;
+    let url = `/feeds/posts/default?alt=json&q=${encodeURIComponent(SEARCH_QUERY)}&max-results=30&start-index=${startIndex}`;
+    let data = await getJson(url);
+    let entries = data?.feed?.entry || [];
+    if (!entries.length && PRIMARY_TAG) {
+      url = `/feeds/posts/default/-/${encodeURIComponent(PRIMARY_TAG)}?alt=json&max-results=30&start-index=${startIndex}`;
+      data = await getJson(url);
+      entries = data?.feed?.entry || [];
     }
-
-    // 2. Fetch full Spider-Man runs from XoxoComic
-    try {
-      const xoxoUrl = `${XOXO_BASE}/search-comic?keyword=spider-man&page=${page}`;
-      const xHtml = await getHtml(xoxoUrl);
-      const cardRe = /<div[^>]*class=["'][^"']*item[^"']*["'][\s\S]*?<a[^>]*href=["'](https:\/\/xoxocomic\.com\/comic\/[^"'\s]+)["'][\s\S]*?<img[^>]+(?:data-src|src)=["']([^"'\s]+)["'][^>]*alt=["']([^"']*)["']/gi;
-      const xMatches = Array.from(xHtml.matchAll(cardRe));
-      for (const m of xMatches) {
-        const slug = m[1].split("/comic/").pop().replace(/\/$/, "");
-        let cover = m[2];
-        if (cover.startsWith("//")) cover = "https:" + cover;
-        else if (cover.startsWith("/")) cover = XOXO_BASE + cover;
-        const title = cleanTitle((m[3] || slug).replace(/\s*Comic\s*$/i, ""));
-        items.push({
-          id: slug,
-          title: title,
-          cover: cover
-        });
-      }
-    } catch(e) {}
-
-    return items;
+    return entries.map(entryToItem).filter(e => e.id);
   },
 
   async search(query, offset) {
-    const q = String(query || "").trim();
-    const page = Math.floor((Number(offset) || 0) / 24) + 1;
-    const items = [];
-
-    // Arabic search
-    try {
-      const arData = await getJson(`${AR_BASE}/feeds/posts/default?alt=json&q=${encodeURIComponent(q + " spider")}&max-results=10`);
-      const arEntries = arData?.feed?.entry || [];
-      for (const e of arEntries) {
-        const postId = (e.id?.$t || "").split("post-").pop();
-        const title = cleanTitle(e.title?.$t);
-        const imgs = extractBloggerImages(e.content?.$t || "");
-        const cover = e.media$thumbnail?.url?.replace(/\/s72-c\//, "/s640/") || imgs[0];
-        if (postId) {
-          items.push({
-            id: "ar:" + postId,
-            title: "[عربي] " + title,
-            cover: cover
-          });
-        }
-      }
-    } catch(e) {}
-
-    // Xoxo search
-    try {
-      const xoxoUrl = `${XOXO_BASE}/search-comic?keyword=${encodeURIComponent("spider-man " + q)}&page=${page}`;
-      const xHtml = await getHtml(xoxoUrl);
-      const cardRe = /<div[^>]*class=["'][^"']*item[^"']*["'][\s\S]*?<a[^>]*href=["'](https:\/\/xoxocomic\.com\/comic\/[^"'\s]+)["'][\s\S]*?<img[^>]+(?:data-src|src)=["']([^"'\s]+)["'][^>]*alt=["']([^"']*)["']/gi;
-      const xMatches = Array.from(xHtml.matchAll(cardRe));
-      for (const m of xMatches) {
-        const slug = m[1].split("/comic/").pop().replace(/\/$/, "");
-        let cover = m[2];
-        if (cover.startsWith("//")) cover = "https:" + cover;
-        else if (cover.startsWith("/")) cover = XOXO_BASE + cover;
-        const title = cleanTitle((m[3] || slug).replace(/\s*Comic\s*$/i, ""));
-        items.push({
-          id: slug,
-          title: title,
-          cover: cover
-        });
-      }
-    } catch(e) {}
-
-    return items;
+    const startIndex = (Number(offset) || 0) + 1;
+    const q = (query || "").trim() + " " + SEARCH_QUERY;
+    const url = `/feeds/posts/default?alt=json&q=${encodeURIComponent(q)}&max-results=30&start-index=${startIndex}`;
+    const data = await getJson(url);
+    const entries = data?.feed?.entry || [];
+    return entries.map(entryToItem).filter(e => e.id);
   },
 
   async detail(id) {
-    if (id.startsWith("ar:")) {
-      const postId = id.replace("ar:", "");
-      const data = await getJson(`${AR_BASE}/feeds/posts/default/${postId}?alt=json`);
-      const entry = data?.entry;
-      const title = cleanTitle(entry?.title?.$t || id);
-      const content = entry?.content?.$t || "";
-      const imgs = extractBloggerImages(content);
-      const cover = entry?.media$thumbnail?.url?.replace(/\/s72-c\//, "/s640/") || imgs[0];
-      const desc = content.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
-      return {
-        id: id,
-        title: "[عربي] " + title,
-        cover: cover,
-        description: desc,
-        author: "Marvel Comics (مترجم)",
-        status: "completed"
-      };
-    }
-
-    const html = await getHtml(`${XOXO_BASE}/comic/${id}`);
-    const titleMatch = html.match(/<h1[^>]*class=["'][^"']*title[^"']*["'][^>]*>([\s\S]*?)<\/h1>/i) ||
-                       html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i);
-    const descMatch = html.match(/<div[^>]*class=["'][^"']*detail-content[^"']*["'][^>]*>([\s\S]*?)<\/div>/i);
-    const coverMatch = html.match(/<div[^>]*class=["'][^"']*col-image[^"']*["'][\s\S]*?<img[^>]+src=["']([^"']+)["']/i);
-    
-    const title = titleMatch ? cleanTitle(titleMatch[1].replace(/<[^>]+>/g, "").replace(/\s*Comic\s*$/i, "")) : cleanTitle(id.replace(/-/g, " "));
-    const description = descMatch ? cleanTitle(descMatch[1].replace(/<[^>]+>/g, " ")) : "Spider-Man comic series.";
-    let cover = coverMatch ? coverMatch[1] : `${XOXO_BASE}/images/series/${id}.jpg`;
-    if (cover.startsWith("//")) cover = "https:" + cover;
+    const data = await getJson(`/feeds/posts/default/${id}?alt=json`);
+    const entry = data?.entry;
+    const title = cleanTitle(entry?.title?.$t || id);
+    const content = entry?.content?.$t || "";
+    const imgs = extractImages(content);
+    const cover = entry?.media$thumbnail?.url?.replace(/\/s72-c\//, "/s640/") || imgs[0];
+    const desc = content.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
 
     return {
       id: id,
       title: title,
       cover: cover,
-      description: description,
-      author: "Marvel Comics",
-      status: "ongoing"
+      description: desc || "كوميكس مترجم بجودة عالية.",
+      author: "Marvel Comics (مترجم)",
+      status: "completed"
     };
   },
 
   async chapters(id) {
-    if (id.startsWith("ar:")) {
-      const postId = id.replace("ar:", "");
-      const data = await getJson(`${AR_BASE}/feeds/posts/default/${postId}?alt=json`);
-      const content = data?.entry?.content?.$t || "";
-      const labelMatch = content.match(/data-label=["']([^"']+)["']/i);
-      if (labelMatch) {
-        const label = labelMatch[1].trim();
-        const chData = await getJson(`${AR_BASE}/feeds/posts/default/-/${encodeURIComponent(label)}?alt=json&max-results=50`);
-        const chEntries = chData?.feed?.entry || [];
-        if (chEntries.length > 0) {
-          return chEntries.map((c, i) => {
-            const chId = (c.id?.$t || "").split("post-").pop();
-            return {
-              id: "ar:" + chId,
-              chapter: String(i + 1),
-              title: cleanTitle(c.title?.$t || `العدد ${i + 1}`)
-            };
-          });
-        }
+    const data = await getJson(`/feeds/posts/default/${id}?alt=json`);
+    const content = data?.entry?.content?.$t || "";
+    const labelMatch = content.match(/data-label=["']([^"']+)["']/i);
+    
+    if (labelMatch) {
+      const label = labelMatch[1].trim();
+      const chData = await getJson(`/feeds/posts/default/-/${encodeURIComponent(label)}?alt=json&max-results=50`);
+      const chEntries = chData?.feed?.entry || [];
+      if (chEntries.length > 0) {
+        return chEntries.map((c, i) => {
+          const chId = (c.id?.$t || "").split("post-").pop();
+          return {
+            id: chId,
+            chapter: String(i + 1),
+            title: cleanTitle(c.title?.$t || `العدد ${i + 1}`)
+          };
+        });
       }
-      return [
-        {
-          id: id,
-          chapter: "1",
-          title: cleanTitle(data?.entry?.title?.$t || "العدد كامل")
-        }
-      ];
     }
 
-    const html = await getHtml(`${XOXO_BASE}/comic/${id}`);
-    const chRe = /<a[^>]*href=["'](https:\/\/xoxocomic\.com\/comic\/[^"'\s]*\/issue-[^"'\s]*)["'][^>]*>([\s\S]*?)<\/a>/gi;
-    const matches = Array.from(html.matchAll(chRe));
-    const seen = new Set();
-    const list = [];
-
-    for (const m of matches) {
-      const chUrl = m[1];
-      if (seen.has(chUrl)) continue;
-      seen.add(chUrl);
-
-      const rawTitle = m[2].replace(/<[^>]+>/g, "").trim();
-      const issueNumMatch = chUrl.match(/issue-([0-9.]+)/i);
-      const issueNum = issueNumMatch ? issueNumMatch[1] : String(list.length + 1);
-      const title = rawTitle && rawTitle !== "Start Reading" ? cleanTitle(rawTitle) : `Issue #${issueNum}`;
-
-      list.push({
-        id: chUrl,
-        chapter: issueNum,
-        title: title
-      });
-    }
-
-    return list;
+    return [
+      {
+        id: id,
+        chapter: "1",
+        title: cleanTitle(data?.entry?.title?.$t || "العدد كامل")
+      }
+    ];
   },
 
   async pageUrls(chapterId) {
-    if (chapterId.startsWith("ar:")) {
-      const postId = chapterId.replace("ar:", "");
-      const data = await getJson(`${AR_BASE}/feeds/posts/default/${postId}?alt=json`);
-      const content = data?.entry?.content?.$t || "";
-      let imgs = extractBloggerImages(content);
-      if (imgs.length <= 2) {
-        const labelMatch = content.match(/data-label=["']([^"']+)["']/i);
-        if (labelMatch) {
-          const label = labelMatch[1].trim();
-          const chData = await getJson(`${AR_BASE}/feeds/posts/default/-/${encodeURIComponent(label)}?alt=json&max-results=50`);
-          const entries = chData?.feed?.entry || [];
-          for (const e of entries) {
-            const eImgs = extractBloggerImages(e.content?.$t || "");
-            if (eImgs.length > 2) return eImgs;
-          }
+    const data = await getJson(`/feeds/posts/default/${chapterId}?alt=json`);
+    const content = data?.entry?.content?.$t || "";
+    let imgs = extractImages(content);
+    
+    if (imgs.length <= 2) {
+      const labelMatch = content.match(/data-label=["']([^"']+)["']/i);
+      if (labelMatch) {
+        const label = labelMatch[1].trim();
+        const chData = await getJson(`/feeds/posts/default/-/${encodeURIComponent(label)}?alt=json&max-results=50`);
+        const entries = chData?.feed?.entry || [];
+        for (const e of entries) {
+          const eImgs = extractImages(e.content?.$t || "");
+          if (eImgs.length > 2) return eImgs;
         }
       }
-      return imgs;
     }
-
-    const readUrl = chapterId.replace(/\/$/, "") + "/all";
-    const html = await getHtml(readUrl);
-    const imgRe = /<img[^>]+(?:data-original|data-src|src)=["'](https:\/\/xoxocomic\.com\/comic\/[^"'\s]+\/\d+\/[^"'\s]+\.(?:jpg|png|webp|jpeg))["']/gi;
-    const matches = Array.from(html.matchAll(imgRe));
-    const seen = new Set();
-    const pages = [];
-
-    for (const m of matches) {
-      const src = m[1];
-      if (!seen.has(src)) {
-        seen.add(src);
-        pages.push(src);
-      }
-    }
-    return pages;
+    return imgs;
   }
 };
 

@@ -1,13 +1,13 @@
 {
   "name": "Harbor Priority Western & Arabic Comics",
   "author": "moahmmed597",
-  "version": "4.1.0",
+  "version": "4.2.0",
   "description": "100% verified Western & Arabic comics repository for Harbor with guaranteed image loading on Samsung TV and PC. Arabic translations (DC, Marvel, Batman, Spider-Man, Ben 10, Invincible) and pure English Western comics (OceComic).",
   "plugins": [
     {
       "id": "arcomixverse",
       "name": "ArComixVerse (كل الكوميكس - عربي)",
-      "version": "4.1.0",
+      "version": "4.2.0",
       "lang": "ar",
       "nsfw": false,
       "icon": "https://raw.githubusercontent.com/moahmmed597/Comics-for-harbor/main/icons/arcomixverse.png",
@@ -17,7 +17,7 @@
     {
       "id": "comicsbookinarabic",
       "name": "كوميكس بوك بالعربي (Comics Book In Arabic)",
-      "version": "4.1.0",
+      "version": "4.2.0",
       "lang": "ar",
       "nsfw": false,
       "icon": "https://raw.githubusercontent.com/moahmmed597/Comics-for-harbor/main/icons/comicsbookinarabic.png",
@@ -27,7 +27,7 @@
     {
       "id": "marvel",
       "name": "Marvel Comics (مارفل - عربي)",
-      "version": "4.1.0",
+      "version": "4.2.0",
       "lang": "ar",
       "nsfw": false,
       "icon": "https://raw.githubusercontent.com/moahmmed597/Comics-for-harbor/main/icons/marvel.png",
@@ -37,7 +37,7 @@
     {
       "id": "dccomics",
       "name": "DC Comics (دي سي - عربي)",
-      "version": "4.1.0",
+      "version": "4.2.0",
       "lang": "ar",
       "nsfw": false,
       "icon": "https://raw.githubusercontent.com/moahmmed597/Comics-for-harbor/main/icons/dccomics.png",
@@ -47,7 +47,7 @@
     {
       "id": "batman",
       "name": "Batman Universe (عالم باتمان - عربي)",
-      "version": "4.1.0",
+      "version": "4.2.0",
       "lang": "ar",
       "nsfw": false,
       "icon": "https://raw.githubusercontent.com/moahmmed597/Comics-for-harbor/main/icons/batman.png",
@@ -57,7 +57,7 @@
     {
       "id": "spiderman",
       "name": "Spider-Man Collection (سبايدرمان - عربي)",
-      "version": "4.1.0",
+      "version": "4.2.0",
       "lang": "ar",
       "nsfw": false,
       "icon": "https://raw.githubusercontent.com/moahmmed597/Comics-for-harbor/main/icons/spiderman.png",
@@ -67,7 +67,7 @@
     {
       "id": "indie",
       "name": "Indie & Sci-Fi (سلاسل وأبطال - عربي)",
-      "version": "4.1.0",
+      "version": "4.2.0",
       "lang": "ar",
       "nsfw": false,
       "icon": "https://raw.githubusercontent.com/moahmmed597/Comics-for-harbor/main/icons/indie.png",
@@ -77,12 +77,52 @@
     {
       "id": "ocecomic",
       "name": "OceComic (All Western Comics - English)",
-      "version": "4.1.0",
+      "version": "4.2.0",
       "lang": "en",
       "nsfw": false,
       "icon": "https://raw.githubusercontent.com/moahmmed597/Comics-for-harbor/main/icons/ocecomic.png",
       "entry": "ocecomic.plugin.js",
       "description": "Comprehensive Western comics in original English: Marvel, DC, Image, Dark Horse, Boom Studios"
+    },
+    {
+      "id": "ocecomic-superhero",
+      "name": "Western Heroes (Marvel & DC - English)",
+      "version": "4.2.0",
+      "lang": "en",
+      "nsfw": false,
+      "icon": "https://raw.githubusercontent.com/moahmmed597/Comics-for-harbor/main/icons/superhero.png",
+      "entry": "ocecomic-superhero.plugin.js",
+      "description": "Popular Marvel, DC and superhero comic book runs in original English with full pages"
+    },
+    {
+      "id": "ocecomic-scifi",
+      "name": "Sci-Fi & Cyberpunk (English Comics)",
+      "version": "4.2.0",
+      "lang": "en",
+      "nsfw": false,
+      "icon": "https://raw.githubusercontent.com/moahmmed597/Comics-for-harbor/main/icons/scifi.png",
+      "entry": "ocecomic-scifi.plugin.js",
+      "description": "Western Sci-Fi, Space, Cyberpunk, and Future comics (Transformers, Aliens, Predator, Star Wars)"
+    },
+    {
+      "id": "ocecomic-action",
+      "name": "Action & Adventure (English Comics)",
+      "version": "4.2.0",
+      "lang": "en",
+      "nsfw": false,
+      "icon": "https://raw.githubusercontent.com/moahmmed597/Comics-for-harbor/main/icons/action.png",
+      "entry": "ocecomic-action.plugin.js",
+      "description": "Western Action, Adventure, Fantasy and Martial Arts comics (Conan, Spawn, Red Sonja)"
+    },
+    {
+      "id": "ocecomic-horror",
+      "name": "Horror & Suspense (English Comics)",
+      "version": "4.2.0",
+      "lang": "en",
+      "nsfw": false,
+      "icon": "https://raw.githubusercontent.com/moahmmed597/Comics-for-harbor/main/icons/horror.png",
+      "entry": "ocecomic-horror.plugin.js",
+      "description": "Western Horror, Zombies, Vampires and Dark Suspense comics (The Walking Dead, Crossed)"
     }
   ]
 }

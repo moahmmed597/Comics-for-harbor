@@ -4,56 +4,56 @@
     {
       "id": "arcomixverse",
       "name": "ArComixVerse (عربي)",
-      "version": "1.0.1",
+      "version": "1.1.0",
       "lang": "ar",
       "nsfw": false,
       "icon": "https://arcomixverse.blogspot.com/favicon.ico",
       "entry": "arcomixverse.plugin.js"
     },
     {
-      "id": "arabcomics",
-      "name": "عرب كوميكس (ArabComics)",
-      "version": "1.0.1",
+      "id": "teamx",
+      "name": "Team X (عربي)",
+      "version": "1.1.0",
       "lang": "ar",
       "nsfw": false,
-      "icon": "https://arabcomics.net/wp-content/uploads/2024/01/logo-300x290-1.png",
-      "entry": "arabcomics.plugin.js"
+      "icon": "https://olympustaff.com/images/TeamX.png",
+      "entry": "teamx.plugin.js"
     },
     {
-      "id": "batcave",
-      "name": "باتكيف (Batcave - عربي)",
-      "version": "1.0.1",
+      "id": "azora",
+      "name": "Azora (عربي)",
+      "version": "1.1.0",
       "lang": "ar",
       "nsfw": false,
-      "icon": "https://batcave.biz/favicon.ico",
-      "entry": "batcave.plugin.js"
+      "icon": "https://azorafly.com/favicon.ico",
+      "entry": "azora.plugin.js"
     },
     {
-      "id": "globalcomix",
-      "name": "GlobalComix (English)",
-      "version": "1.0.1",
+      "id": "comick-fanmade",
+      "name": "ComicK Comics (English)",
+      "version": "1.1.0",
       "lang": "en",
       "nsfw": false,
-      "icon": "https://globalcomix.com/favicon.ico",
-      "entry": "globalcomix.plugin.js"
+      "icon": "https://comickfan.com/favicon.ico",
+      "entry": "comick-en.plugin.js"
     },
     {
-      "id": "getcomics",
-      "name": "GetComics (English)",
-      "version": "1.0.1",
+      "id": "mangapill",
+      "name": "MangaPill Comics (English)",
+      "version": "1.1.0",
       "lang": "en",
       "nsfw": false,
-      "icon": "https://getcomics.org/favicon.ico",
-      "entry": "getcomics.plugin.js"
+      "icon": "https://mangapill.com/favicon.ico",
+      "entry": "mangapill-en.plugin.js"
     },
     {
-      "id": "comicextra",
-      "name": "ComicExtra (English)",
-      "version": "1.0.1",
+      "id": "webtoons",
+      "name": "Webtoons (English)",
+      "version": "1.1.0",
       "lang": "en",
       "nsfw": false,
-      "icon": "https://comicextra.org/favicon.ico",
-      "entry": "comicextra.plugin.js"
+      "icon": "https://www.webtoons.com/favicon.ico",
+      "entry": "webtoons-en.plugin.js"
     }
   ]
 }

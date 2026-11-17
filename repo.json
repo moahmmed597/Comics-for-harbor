@@ -1,7 +1,7 @@
 {
   "name": "Harbor Priority Western & Arabic Comics",
   "author": "moahmmed597",
-  "description": "100% verified Western & Arabic comics repository for Harbor with guaranteed image loading on Samsung TV and PC. Arabic translations (DC, Marvel, Batman, Spider-Man, Ben 10, Invincible) and pure English Western comics (OceComic & Western Heroes).",
+  "description": "100% verified Western & Arabic comics repository for Harbor with guaranteed image loading on Samsung TV and PC. Arabic translations (DC, Marvel, Batman, Spider-Man, Ben 10, Invincible) and 5 pure English Western comics sources (OceComic, Superheroes, Sci-Fi, Action, Horror).",
   "plugins": [
     {
       "id": "arcomixverse",
@@ -59,7 +59,7 @@
     },
     {
       "id": "ocecomic",
-      "name": "OceComic (English Comics)",
+      "name": "OceComic (All Western Comics - English)",
       "version": "3.5.0",
       "lang": "en",
       "nsfw": false,
@@ -68,12 +68,39 @@
     },
     {
       "id": "ocecomic-superhero",
-      "name": "Western Heroes (English Superheroes)",
+      "name": "Western Heroes (Marvel & DC - English)",
       "version": "3.5.0",
       "lang": "en",
       "nsfw": false,
       "entry": "ocecomic-superhero.plugin.js",
       "description": "Popular Marvel, DC and superhero comic book runs in original English with full pages"
+    },
+    {
+      "id": "ocecomic-scifi",
+      "name": "Sci-Fi & Cyberpunk (English Comics)",
+      "version": "3.5.0",
+      "lang": "en",
+      "nsfw": false,
+      "entry": "ocecomic-scifi.plugin.js",
+      "description": "Western Sci-Fi, Space, Cyberpunk, and Future comics (Transformers, Aliens, Predator, Star Wars)"
+    },
+    {
+      "id": "ocecomic-action",
+      "name": "Action & Adventure (English Comics)",
+      "version": "3.5.0",
+      "lang": "en",
+      "nsfw": false,
+      "entry": "ocecomic-action.plugin.js",
+      "description": "Western Action, Adventure, Fantasy and Martial Arts comics (Conan, Spawn, Red Sonja)"
+    },
+    {
+      "id": "ocecomic-horror",
+      "name": "Horror & Suspense (English Comics)",
+      "version": "3.5.0",
+      "lang": "en",
+      "nsfw": false,
+      "entry": "ocecomic-horror.plugin.js",
+      "description": "Western Horror, Zombies, Vampires and Dark Suspense comics (The Walking Dead, Crossed)"
     }
   ]
 }

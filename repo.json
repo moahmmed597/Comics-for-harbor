@@ -1,59 +1,61 @@
 {
-  "name": "Comics - كوميكس (عربي + English)",
+  "name": "Harbor Priority Western & Arabic Comics",
+  "author": "moahmmed597",
+  "description": "100% verified Western & Arabic comics repository for Harbor with guaranteed image loading on Samsung TV and PC. DC, Marvel, Batman, Spider-Man, Ben 10, Invincible.",
   "plugins": [
     {
       "id": "arcomixverse",
-      "name": "ArComixVerse (عربي)",
-      "version": "3.0.0",
+      "name": "ArComixVerse (كل الكوميكس)",
+      "version": "3.2.0",
       "lang": "ar",
       "nsfw": false,
-      "icon": "https://arcomixverse.blogspot.com/favicon.ico",
-      "entry": "arcomixverse.plugin.js"
+      "entry": "arcomixverse.plugin.js",
+      "description": "جميع سلاسل وأعداد الكوميكس المترجمة للعربية (مارفل، دي سي، بن 10، انفينسيبل)"
     },
     {
-      "id": "xoxocomic",
-      "name": "XOXO Comics (All Western)",
-      "version": "3.0.0",
-      "lang": "en",
+      "id": "dccomics",
+      "name": "DC Comics (دي سي)",
+      "version": "3.2.0",
+      "lang": "ar",
       "nsfw": false,
-      "icon": "https://xoxocomic.com/favicon.ico",
-      "entry": "xoxocomic.plugin.js"
+      "entry": "dccomics.plugin.js",
+      "description": "كوميكس دي سي الكاملة: أبسولوت باتمان، سوبرمان، فلاش، جستس ليج، ونايت وينج"
     },
     {
-      "id": "marvel-comics",
-      "name": "Marvel Comics (English)",
-      "version": "3.0.0",
-      "lang": "en",
+      "id": "marvel",
+      "name": "Marvel Comics (مارفل)",
+      "version": "3.2.0",
+      "lang": "ar",
       "nsfw": false,
-      "icon": "https://xoxocomic.com/favicon.ico",
-      "entry": "marvel.plugin.js"
+      "entry": "marvel.plugin.js",
+      "description": "كوميكس مارفل الكاملة: أفنجرز، سبايدرمان، وولفرين، إكس مين، ودكتور دوم"
     },
     {
-      "id": "dc-comics",
-      "name": "DC Comics (English)",
-      "version": "3.0.0",
-      "lang": "en",
+      "id": "batman",
+      "name": "Batman Universe (عالم باتمان)",
+      "version": "3.2.0",
+      "lang": "ar",
       "nsfw": false,
-      "icon": "https://xoxocomic.com/favicon.ico",
-      "entry": "dccomics.plugin.js"
+      "entry": "batman.plugin.js",
+      "description": "أرشيف باتمان الشامل: Absolute Batman، باتمان 2025، وDetective Comics"
     },
     {
-      "id": "darkhorse-comics",
-      "name": "Dark Horse & Cyberpunk (English)",
-      "version": "3.0.0",
-      "lang": "en",
+      "id": "spiderman",
+      "name": "Spider-Man Collection (سبايدرمان)",
+      "version": "3.2.0",
+      "lang": "ar",
       "nsfw": false,
-      "icon": "https://xoxocomic.com/favicon.ico",
-      "entry": "darkhorse.plugin.js"
+      "entry": "spiderman.plugin.js",
+      "description": "سلاسل سبايدرمان الكاملة: The Amazing Spider-Man وUltimate Spider-Man"
     },
     {
-      "id": "hot-comics",
-      "name": "Hot Trending Comics (English)",
-      "version": "3.0.0",
-      "lang": "en",
+      "id": "indie",
+      "name": "Indie & Sci-Fi (سلاسل وأبطال)",
+      "version": "3.2.0",
+      "lang": "ar",
       "nsfw": false,
-      "icon": "https://xoxocomic.com/favicon.ico",
-      "entry": "hotcomics.plugin.js"
+      "entry": "indie.plugin.js",
+      "description": "سلاسل مستقلة وخيال علمي: بن 10 (Ben 10 2026)، انفينسيبل (Invincible)، والموتى السائرون"
     }
   ]
 }

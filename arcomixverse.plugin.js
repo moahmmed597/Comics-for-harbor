@@ -1,7 +1,8 @@
-// Harbor Comic Source Plugin: ArComixVerse (arcomixverse.blogspot.com)
+// Harbor Comic Source Plugin: ArComixVerse (كل الكوميكس)
 // Arabic Comic Translations (DC, Marvel, Indie, Ben 10, Invincible)
 
 const BASE = "https://arcomixverse.blogspot.com";
+const FILTER_TAG = null;
 
 async function getJson(path) {
   const url = path.startsWith("http") ? path : BASE + path;
@@ -41,26 +42,28 @@ function extractImages(html) {
   return urls;
 }
 
+function entryToItem(entry) {
+  const postId = (entry.id?.$t || "").split("post-").pop();
+  const title = cleanTitle(entry.title?.$t);
+  const cover = entry.media$thumbnail?.url?.replace(/\/s72-c\//, "/s640/") || 
+                extractImages(entry.content?.$t)[0];
+  return {
+    id: postId,
+    title: title || "كوميكس",
+    cover: abs(cover),
+  };
+}
+
 const plugin = {
   id: "arcomixverse",
-  name: "ArComixVerse (عربي)",
+  name: "ArComixVerse (كل الكوميكس)",
 
   async popular(offset) {
     const startIndex = (Number(offset) || 0) + 1;
     const url = "/feeds/posts/default?alt=json&max-results=30&start-index=" + startIndex;
     const data = await getJson(url);
     const entries = data.feed?.entry || [];
-    return entries.map((entry) => {
-      const postId = (entry.id?.$t || "").split("post-").pop();
-      const title = cleanTitle(entry.title?.$t);
-      const cover = entry.media$thumbnail?.url?.replace(/\/s72-c\//, "/s640/") || 
-                    extractImages(entry.content?.$t)[0];
-      return {
-        id: postId,
-        title: title || "كوميكس",
-        cover: abs(cover),
-      };
-    }).filter((e) => e.id);
+    return entries.map(entryToItem).filter((e) => e.id);
   },
 
   async search(query, offset) {
@@ -68,17 +71,7 @@ const plugin = {
     const url = "/feeds/posts/default?alt=json&q=" + encodeURIComponent(query) + "&max-results=30&start-index=" + startIndex;
     const data = await getJson(url);
     const entries = data.feed?.entry || [];
-    return entries.map((entry) => {
-      const postId = (entry.id?.$t || "").split("post-").pop();
-      const title = cleanTitle(entry.title?.$t);
-      const cover = entry.media$thumbnail?.url?.replace(/\/s72-c\//, "/s640/") || 
-                    extractImages(entry.content?.$t)[0];
-      return {
-        id: postId,
-        title: title || "كوميكس",
-        cover: abs(cover),
-      };
-    }).filter((e) => e.id);
+    return entries.map(entryToItem).filter((e) => e.id);
   },
 
   async detail(id) {
@@ -133,16 +126,37 @@ const plugin = {
   async pageUrls(chapterId) {
     const data = await getJson("/feeds/posts/default/" + chapterId + "?alt=json");
     const content = data.entry?.content?.$t || "";
-    return extractImages(content);
+    let imgs = extractImages(content);
+    
+    // Guard: if post only has poster image, check if it references a chapter label
+    if (imgs.length <= 2) {
+      const labelMatch = content.match(/data-label=["']([^"']+)["']/i);
+      if (labelMatch) {
+        const label = labelMatch[1].trim();
+        const chData = await getJson("/feeds/posts/default/-/" + encodeURIComponent(label) + "?alt=json&max-results=50");
+        const entries = chData.feed?.entry || [];
+        for (const e of entries) {
+          const eImgs = extractImages(e.content?.$t || "");
+          if (eImgs.length > 2) {
+            return eImgs;
+          }
+        }
+      }
+    }
+    return imgs;
   },
 
   async tags() {
     return [
       { id: "DC", name: "دي سي (DC Comics)", group: "الناشر" },
       { id: "MARVEL", name: "مارفل (Marvel)", group: "الناشر" },
+      { id: "IMAGE", name: "إيميج (Image Comics)", group: "الناشر" },
+      { id: "ABSOLUTE BATMAN", name: "باتمان (Absolute Batman)", group: "شخصيات" },
+      { id: "ABSOLUTE SUPERMAN", name: "سوبرمان (Absolute Superman)", group: "شخصيات" },
+      { id: "The Amazing Spider Man", name: "سبايدرمان (Spider-Man)", group: "شخصيات" },
       { id: "BEN 10", name: "بن 10 (Ben 10)", group: "سلاسل" },
-      { id: "ABSOLUTE BATMAN", name: "باتمان (Absolute Batman)", group: "سلاسل" },
       { id: "INVINCIBLE", name: "انفينسيبل (Invincible)", group: "سلاسل" },
+      { id: "TWD", name: "الموتى السائرون (The Walking Dead)", group: "سلاسل" },
     ];
   }
 };

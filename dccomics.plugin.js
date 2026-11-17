@@ -1,14 +1,14 @@
-// Harbor Comic Source Plugin: DC Comics (English)
-// Direct Western Comics reader (DC, Marvel, Dark Horse, Image)
+// Harbor Comic Source Plugin: DC Comics (دي سي)
+// Absolute Batman, Absolute Superman, Justice League, Flash, Green Lantern
 
-const BASE = "https://xoxocomic.com";
-const CATEGORY_PATH = "/dc-comics-comic";
+const BASE = "https://arcomixverse.blogspot.com";
+const FILTER_TAG = "DC";
 
-async function getDoc(path) {
+async function getJson(path) {
   const url = path.startsWith("http") ? path : BASE + path;
-  const res = await harbor.http(url, { responseType: "text" });
-  if (!res || !res.ok) throw new Error("HTTP " + (res ? res.status : "?") + " for " + url);
-  return harbor.parseHtml(res.body);
+  const res = await harbor.http(url, { responseType: "json" });
+  if (!res) throw new Error("Failed to fetch JSON from " + url);
+  return res;
 }
 
 function abs(url) {
@@ -20,117 +20,140 @@ function abs(url) {
 }
 
 function cleanTitle(str) {
-  return String(str || "").replace(/\s+/g, " ").trim();
+  return (str || "")
+    .replace(/&#8211;/g, "-")
+    .replace(/&#8217;/g, "'")
+    .replace(/&#038;/g, "&")
+    .replace(/&amp;/g, "&")
+    .trim();
 }
 
-function extractCards(doc) {
-  const items = [];
-  const seen = new Set();
-  const elements = doc.querySelectorAll("div.item") || [];
-  for (const el of elements) {
-    const a = el.querySelector("h3 a") || el.querySelector("a");
-    if (!a) continue;
-    const href = a.attr("href") || "";
-    if (!href.includes("/comic/")) continue;
-    const slug = href.split("/comic/").pop().replace(/\/$/, "");
-    if (!slug || seen.has(slug)) continue;
-    seen.add(slug);
-
-    const img = el.querySelector("img");
-    const rawTitle = a.attr("title") || (img && img.attr("alt")) || a.text() || slug;
-    const title = cleanTitle(rawTitle).replace(/Comic$/i, "").trim();
-    const cover = img ? (img.attr("data-src") || img.attr("data-original") || img.attr("src")) : undefined;
-
-    items.push({
-      id: slug,
-      title: title || slug,
-      cover: abs(cover)
-    });
+function extractImages(html) {
+  const urls = [];
+  const re = /https?:\/\/(?:blogger\.googleusercontent\.com\/img\/[^\s"\'<>]+|[^\s"\'<>]+\.(?:jpg|png|webp))/gi;
+  let m;
+  while ((m = re.exec(html || "")) !== null) {
+    let u = m[0];
+    if (u.includes("s72-c")) u = u.replace("/s72-c/", "/s1600/");
+    if (!urls.includes(u) && !u.includes("favicon") && !u.includes("blank.gif")) {
+      urls.push(u);
+    }
   }
-  return items;
+  return urls;
+}
+
+function entryToItem(entry) {
+  const postId = (entry.id?.$t || "").split("post-").pop();
+  const title = cleanTitle(entry.title?.$t);
+  const cover = entry.media$thumbnail?.url?.replace(/\/s72-c\//, "/s640/") || 
+                extractImages(entry.content?.$t)[0];
+  return {
+    id: postId,
+    title: title || "DC Comics",
+    cover: abs(cover),
+  };
 }
 
 const plugin = {
-  id: "dc-comics",
-  name: "DC Comics (English)",
+  id: "dccomics",
+  name: "DC Comics (دي سي)",
 
   async popular(offset) {
-    const page = Math.floor((Number(offset) || 0) / 12) + 1;
-    const url = CATEGORY_PATH + "?page=" + page;
-    const doc = await getDoc(url);
-    return extractCards(doc);
+    const startIndex = (Number(offset) || 0) + 1;
+    const url = "/feeds/posts/default/-/" + encodeURIComponent(FILTER_TAG) + "?alt=json&max-results=30&start-index=" + startIndex;
+    const data = await getJson(url);
+    const entries = data.feed?.entry || [];
+    return entries.map(entryToItem).filter((e) => e.id);
   },
 
   async search(query, offset) {
-    const page = Math.floor((Number(offset) || 0) / 12) + 1;
-    const url = "/search-comic?keyword=" + encodeURIComponent(query || "") + "&page=" + page;
-    const doc = await getDoc(url);
-    return extractCards(doc);
+    const startIndex = (Number(offset) || 0) + 1;
+    const q = query + " " + FILTER_TAG;
+    const url = "/feeds/posts/default?alt=json&q=" + encodeURIComponent(q) + "&max-results=30&start-index=" + startIndex;
+    const data = await getJson(url);
+    const entries = data.feed?.entry || [];
+    return entries.map(entryToItem).filter((e) => e.id);
   },
 
   async detail(id) {
-    const doc = await getDoc("/comic/" + id);
-    const titleEl = doc.querySelector("h1") || doc.querySelector(".title");
-    const coverEl = doc.querySelector(".col-image img") || doc.querySelector(".detail-info img") || doc.querySelector("img");
-    const descEl = doc.querySelector(".detail-content") || doc.querySelector(".comic-description");
-
-    const cover = coverEl ? (coverEl.attr("data-src") || coverEl.attr("data-original") || coverEl.attr("src")) : undefined;
+    const data = await getJson("/feeds/posts/default/" + id + "?alt=json");
+    const entry = data.entry;
+    const title = cleanTitle(entry?.title?.$t || id);
+    const content = entry?.content?.$t || "";
+    const cover = entry?.media$thumbnail?.url?.replace(/\/s72-c\//, "/s640/") || 
+                  extractImages(content)[0];
+    const desc = content.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
 
     return {
       id,
-      title: cleanTitle(titleEl ? titleEl.text() : id).replace(/Comic$/i, "").trim(),
+      title,
       cover: abs(cover),
-      description: cleanTitle(descEl ? descEl.text() : "")
+      description: desc,
     };
   },
 
   async chapters(id) {
-    const doc = await getDoc("/comic/" + id);
-    const elements = doc.querySelectorAll("div.list-chapter a") || [];
-    const chapters = [];
-    const seen = new Set();
-
-    for (const a of elements) {
-      const href = a.attr("href") || "";
-      if (!href.includes("/issue-") && !href.includes("/full")) continue;
-      if (seen.has(href)) continue;
-      seen.add(href);
-
-      const title = cleanTitle(a.text()) || "Issue";
-      chapters.push({
-        id: href,
-        chapter: title,
-        title: title
-      });
+    const data = await getJson("/feeds/posts/default/" + id + "?alt=json");
+    const content = data.entry?.content?.$t || "";
+    const labelMatch = content.match(/data-label=["']([^"']+)["']/i);
+    
+    if (labelMatch) {
+      const label = labelMatch[1].trim();
+      const chData = await getJson("/feeds/posts/default/-/" + encodeURIComponent(label) + "?alt=json&max-results=50");
+      const chEntries = chData.feed?.entry || [];
+      if (chEntries.length > 0) {
+        return chEntries.map((c, i) => {
+          const chId = (c.id?.$t || "").split("post-").pop();
+          const chTitle = cleanTitle(c.title?.$t || ("العدد " + (i + 1)));
+          return {
+            id: chId,
+            chapter: String(i + 1),
+            title: chTitle,
+          };
+        });
+      }
     }
 
-    if (!chapters.length) {
-      chapters.push({
-        id: BASE + "/comic/" + id + "/full",
-        chapter: "Full Issue",
-        title: "Full Issue"
-      });
-    }
-    return chapters;
+    return [
+      {
+        id: id,
+        chapter: "1",
+        title: cleanTitle(data.entry?.title?.$t || "العدد كامل"),
+      }
+    ];
   },
 
   async pageUrls(chapterId) {
-    let url = chapterId.startsWith("http") ? chapterId : BASE + (chapterId.startsWith("/") ? "" : "/") + chapterId;
-    if (!url.endsWith("/all")) {
-      url = url.replace(/\/$/, "") + "/all";
-    }
-
-    const doc = await getDoc(url);
-    const images = [];
-    const elements = doc.querySelectorAll(".page-chapter img, .reading-detail img, div.chapter-image img") || [];
-
-    for (const img of elements) {
-      const src = img.attr("data-original") || img.attr("data-src") || img.attr("src");
-      if (src && !src.startsWith("data:") && !src.includes("logo.png") && !images.includes(src)) {
-        images.push(abs(src));
+    const data = await getJson("/feeds/posts/default/" + chapterId + "?alt=json");
+    const content = data.entry?.content?.$t || "";
+    let imgs = extractImages(content);
+    
+    if (imgs.length <= 2) {
+      const labelMatch = content.match(/data-label=["']([^"']+)["']/i);
+      if (labelMatch) {
+        const label = labelMatch[1].trim();
+        const chData = await getJson("/feeds/posts/default/-/" + encodeURIComponent(label) + "?alt=json&max-results=50");
+        const entries = chData.feed?.entry || [];
+        for (const e of entries) {
+          const eImgs = extractImages(e.content?.$t || "");
+          if (eImgs.length > 2) {
+            return eImgs;
+          }
+        }
       }
     }
-    return images;
+    return imgs;
+  },
+
+  async tags() {
+    return [
+      { id: "ABSOLUTE BATMAN", name: "باتمان (Absolute Batman)", group: "الأبطال" },
+      { id: "ABSOLUTE SUPERMAN", name: "سوبرمان (Absolute Superman)", group: "الأبطال" },
+      { id: "Justice League Unlimited", name: "جستس ليج (Justice League)", group: "فرق" },
+      { id: "THE FLASH", name: "فلاش (The Flash)", group: "الأبطال" },
+      { id: "GREEN LANTERN", name: "جرين لانترن (Green Lantern)", group: "الأبطال" },
+      { id: "NightWing", name: "نايت وينج (Nightwing)", group: "الأبطال" },
+    ];
   }
 };
 

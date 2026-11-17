@@ -1,21 +1,30 @@
 {
   "name": "Harbor Priority Western & Arabic Comics",
   "author": "moahmmed597",
-  "description": "100% verified Western & Arabic comics repository for Harbor with guaranteed image loading on Samsung TV and PC. DC, Marvel, Batman, Spider-Man, Ben 10, Invincible.",
+  "description": "100% verified Western & Arabic comics repository for Harbor with guaranteed image loading on Samsung TV and PC. DC, Marvel, Batman, Spider-Man, Ben 10, Invincible, Graphic Novels.",
   "plugins": [
     {
       "id": "arcomixverse",
       "name": "ArComixVerse (كل الكوميكس)",
-      "version": "3.2.0",
+      "version": "3.3.0",
       "lang": "ar",
       "nsfw": false,
       "entry": "arcomixverse.plugin.js",
-      "description": "جميع سلاسل وأعداد الكوميكس المترجمة للعربية (مارفل، دي سي، بن 10، انفينسيبل)"
+      "description": "المكتبة الشاملة لجميع أعداد وسلاسل الكوميكس المترجمة (مارفل، دي سي، بن 10، انفينسيبل)"
+    },
+    {
+      "id": "cbia",
+      "name": "الكوميكس بالعربية (Arabic Comics)",
+      "version": "3.3.0",
+      "lang": "ar",
+      "nsfw": false,
+      "entry": "cbia.plugin.js",
+      "description": "موقع الكوميكس بالعربية: روايات وملاحم كاملة (النكتة القاتلة، ليالي مظلمة، فينوم ريكس، وأفنجرز)"
     },
     {
       "id": "dccomics",
       "name": "DC Comics (دي سي)",
-      "version": "3.2.0",
+      "version": "3.3.0",
       "lang": "ar",
       "nsfw": false,
       "entry": "dccomics.plugin.js",
@@ -24,7 +33,7 @@
     {
       "id": "marvel",
       "name": "Marvel Comics (مارفل)",
-      "version": "3.2.0",
+      "version": "3.3.0",
       "lang": "ar",
       "nsfw": false,
       "entry": "marvel.plugin.js",
@@ -33,7 +42,7 @@
     {
       "id": "batman",
       "name": "Batman Universe (عالم باتمان)",
-      "version": "3.2.0",
+      "version": "3.3.0",
       "lang": "ar",
       "nsfw": false,
       "entry": "batman.plugin.js",
@@ -42,7 +51,7 @@
     {
       "id": "spiderman",
       "name": "Spider-Man Collection (سبايدرمان)",
-      "version": "3.2.0",
+      "version": "3.3.0",
       "lang": "ar",
       "nsfw": false,
       "entry": "spiderman.plugin.js",
@@ -51,7 +60,7 @@
     {
       "id": "indie",
       "name": "Indie & Sci-Fi (سلاسل وأبطال)",
-      "version": "3.2.0",
+      "version": "3.3.0",
       "lang": "ar",
       "nsfw": false,
       "entry": "indie.plugin.js",

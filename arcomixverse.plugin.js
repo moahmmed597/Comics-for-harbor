@@ -7,7 +7,13 @@ const FILTER_TAG = null;
 async function getJson(path) {
   const url = path.startsWith("http") ? path : BASE + path;
   const res = await harbor.http(url, { responseType: "json" });
-  if (!res) throw new Error("Failed to fetch JSON from " + url);
+  if (typeof res === "string") {
+    try { return JSON.parse(res); } catch(e) { return null; }
+  }
+  if (res && res.body) {
+    if (typeof res.body === "object") return res.body;
+    try { return JSON.parse(res.body); } catch(e) { return null; }
+  }
   return res;
 }
 

@@ -1,106 +1,98 @@
 {
   "name": "Harbor Priority Western & Arabic Comics",
   "author": "moahmmed597",
-  "description": "100% verified Western & Arabic comics repository for Harbor with guaranteed image loading on Samsung TV and PC. Arabic translations (DC, Marvel, Batman, Spider-Man, Ben 10, Invincible) and 5 pure English Western comics sources (OceComic, Superheroes, Sci-Fi, Action, Horror).",
+  "version": "4.0.0",
+  "description": "المستودع المتكامل للكوميكس العالمية والعربية لتطبيق Harbor و 7M على الشاشات الذكية. يضم مكتبة مارفل ودي سي الكبرى (أكثر من 35,000 كومك)، عالم سبايدرمان الشامل، عالم باتمان، سلاسل مارفل وأفنجرز وإكس مين الكاملة، مع ترجمات عربية حصرية وأيقونات أصلية عالية الدقة 100%.",
   "plugins": [
     {
-      "id": "arcomixverse",
-      "name": "ArComixVerse (كل الكوميكس - عربي)",
-      "version": "3.5.0",
-      "lang": "ar",
+      "id": "xoxocomic",
+      "name": "XoxoComic (مكتبة الكومكس العالمية - 35,000+ Comics)",
+      "version": "4.0.0",
+      "lang": "en",
       "nsfw": false,
-      "entry": "arcomixverse.plugin.js",
-      "description": "المكتبة الشاملة لجميع أعداد وسلاسل الكوميكس المترجمة (مارفل، دي سي، بن 10، انفينسيبل)"
-    },
-    {
-      "id": "dccomics",
-      "name": "DC Comics (دي سي - عربي)",
-      "version": "3.5.0",
-      "lang": "ar",
-      "nsfw": false,
-      "entry": "dccomics.plugin.js",
-      "description": "كوميكس دي سي الكاملة مترجمة: أبسولوت باتمان، سوبرمان، فلاش، جستس ليج، ونايت وينج"
-    },
-    {
-      "id": "marvel",
-      "name": "Marvel Comics (مارفل - عربي)",
-      "version": "3.5.0",
-      "lang": "ar",
-      "nsfw": false,
-      "entry": "marvel.plugin.js",
-      "description": "كوميكس مارفل الكاملة مترجمة: أفنجرز، سبايدرمان، وولفرين، إكس مين، ودكتور دوم"
-    },
-    {
-      "id": "batman",
-      "name": "Batman Universe (عالم باتمان - عربي)",
-      "version": "3.5.0",
-      "lang": "ar",
-      "nsfw": false,
-      "entry": "batman.plugin.js",
-      "description": "أرشيف باتمان الشامل مترجم: Absolute Batman، باتمان 2025، وDetective Comics"
+      "icon": "https://raw.githubusercontent.com/moahmmed597/Comics-for-harbor/main/icons/xoxocomic.png",
+      "entry": "xoxocomic.plugin.js",
+      "description": "أضخم مكتبة كومكس غربية عالمية (مارفل، دي سي، سبايدرمان، باتمان، أفنجرز، إيميج، ودارك هورس) مع صفحات كاملة عالية الدقة"
     },
     {
       "id": "spiderman",
-      "name": "Spider-Man Collection (سبايدرمان - عربي)",
-      "version": "3.5.0",
-      "lang": "ar",
+      "name": "Spider-Man Universe (عالم سبايدرمان الشامل)",
+      "version": "4.0.0",
+      "lang": "en",
       "nsfw": false,
+      "icon": "https://raw.githubusercontent.com/moahmmed597/Comics-for-harbor/main/icons/spiderman.png",
       "entry": "spiderman.plugin.js",
-      "description": "سلاسل سبايدرمان الكاملة مترجمة: The Amazing Spider-Man وUltimate Spider-Man"
+      "description": "أرشيف سبايدرمان الكامل عبر التاريخ (The Amazing Spider-Man, Ultimate, Miles Morales, 2099) مع الترجمات العربية الكاملة"
     },
     {
-      "id": "indie",
-      "name": "Indie & Sci-Fi (سلاسل وأبطال - عربي)",
-      "version": "3.5.0",
+      "id": "batman",
+      "name": "Batman Universe (عالم باتمان الشامل)",
+      "version": "4.0.0",
+      "lang": "en",
+      "nsfw": false,
+      "icon": "https://raw.githubusercontent.com/moahmmed597/Comics-for-harbor/main/icons/batman.png",
+      "entry": "batman.plugin.js",
+      "description": "أرشيف باتمان الشامل (Detective Comics, Absolute Batman, Dark Knight) بالإنجليزية والمترجم للعربية"
+    },
+    {
+      "id": "marvel",
+      "name": "Marvel Comics (مارفل كوميكس الشامل)",
+      "version": "4.0.0",
+      "lang": "en",
+      "nsfw": false,
+      "icon": "https://raw.githubusercontent.com/moahmmed597/Comics-for-harbor/main/icons/marvel.png",
+      "entry": "marvel.plugin.js",
+      "description": "سلاسل مارفل الكبرى (أفنجرز، وولفرين، إكس مين، دكتور دوم، ثور، آيرون مان) بأعدادها الكاملة والمترجمة"
+    },
+    {
+      "id": "dccomics",
+      "name": "DC Comics (دي سي كوميكس الشامل)",
+      "version": "4.0.0",
+      "lang": "en",
+      "nsfw": false,
+      "icon": "https://raw.githubusercontent.com/moahmmed597/Comics-for-harbor/main/icons/dccomics.png",
+      "entry": "dccomics.plugin.js",
+      "description": "سلاسل دي سي الكبرى (سوبرمان، فلاش، جاستس ليج، جرين لانترن، نايت وينج) بأعدادها الكاملة والمترجمة"
+    },
+    {
+      "id": "arcomixverse",
+      "name": "ArComixVerse (كوميكس مترجمة - عربي)",
+      "version": "4.0.0",
       "lang": "ar",
       "nsfw": false,
-      "entry": "indie.plugin.js",
-      "description": "سلاسل مستقلة وخيال علمي مترجمة: بن 10 (Ben 10 2026)، انفينسيبل (Invincible)، والموتى السائرون"
+      "icon": "https://raw.githubusercontent.com/moahmmed597/Comics-for-harbor/main/icons/arcomixverse.png",
+      "entry": "arcomixverse.plugin.js",
+      "description": "المكتبة الشاملة لجميع أعداد وسلاسل الكوميكس المترجمة للعربية بدقة عالية"
+    },
+    {
+      "id": "comicsbookinarabic",
+      "name": "كوميكس بوك بالعربي (Comics Book In Arabic)",
+      "version": "4.0.0",
+      "lang": "ar",
+      "nsfw": false,
+      "icon": "https://raw.githubusercontent.com/moahmmed597/Comics-for-harbor/main/icons/comicsbookinarabic.png",
+      "entry": "comicsbookinarabic.plugin.js",
+      "description": "أعداد كاملة مترجمة للغة العربية بجودة فائقة (باتمان: لعنة فارس النور، سوبرمان، ووندرومان)"
     },
     {
       "id": "ocecomic",
       "name": "OceComic (All Western Comics - English)",
-      "version": "3.5.0",
+      "version": "4.0.0",
       "lang": "en",
       "nsfw": false,
+      "icon": "https://raw.githubusercontent.com/moahmmed597/Comics-for-harbor/main/icons/ocecomic.png",
       "entry": "ocecomic.plugin.js",
       "description": "Comprehensive Western comics in original English: Marvel, DC, Image, Dark Horse, Boom Studios"
     },
     {
-      "id": "ocecomic-superhero",
-      "name": "Western Heroes (Marvel & DC - English)",
-      "version": "3.5.0",
-      "lang": "en",
+      "id": "indie",
+      "name": "Indie & Sci-Fi (سلاسل وأبطال مستقلة)",
+      "version": "4.0.0",
+      "lang": "ar",
       "nsfw": false,
-      "entry": "ocecomic-superhero.plugin.js",
-      "description": "Popular Marvel, DC and superhero comic book runs in original English with full pages"
-    },
-    {
-      "id": "ocecomic-scifi",
-      "name": "Sci-Fi & Cyberpunk (English Comics)",
-      "version": "3.5.0",
-      "lang": "en",
-      "nsfw": false,
-      "entry": "ocecomic-scifi.plugin.js",
-      "description": "Western Sci-Fi, Space, Cyberpunk, and Future comics (Transformers, Aliens, Predator, Star Wars)"
-    },
-    {
-      "id": "ocecomic-action",
-      "name": "Action & Adventure (English Comics)",
-      "version": "3.5.0",
-      "lang": "en",
-      "nsfw": false,
-      "entry": "ocecomic-action.plugin.js",
-      "description": "Western Action, Adventure, Fantasy and Martial Arts comics (Conan, Spawn, Red Sonja)"
-    },
-    {
-      "id": "ocecomic-horror",
-      "name": "Horror & Suspense (English Comics)",
-      "version": "3.5.0",
-      "lang": "en",
-      "nsfw": false,
-      "entry": "ocecomic-horror.plugin.js",
-      "description": "Western Horror, Zombies, Vampires and Dark Suspense comics (The Walking Dead, Crossed)"
+      "icon": "https://raw.githubusercontent.com/moahmmed597/Comics-for-harbor/main/icons/indie.png",
+      "entry": "indie.plugin.js",
+      "description": "سلاسل مستقلة وخيال علمي مترجمة: بن 10 (Ben 10)، انفينسيبل (Invincible)، والموتى السائرون"
     }
   ]
 }

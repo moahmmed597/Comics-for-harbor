@@ -6,7 +6,7 @@
     {
       "id": "arcomixverse",
       "name": "ArComixVerse (كل الكوميكس - عربي)",
-      "version": "3.4.0",
+      "version": "3.5.0",
       "lang": "ar",
       "nsfw": false,
       "entry": "arcomixverse.plugin.js",
@@ -15,7 +15,7 @@
     {
       "id": "dccomics",
       "name": "DC Comics (دي سي - عربي)",
-      "version": "3.4.0",
+      "version": "3.5.0",
       "lang": "ar",
       "nsfw": false,
       "entry": "dccomics.plugin.js",
@@ -24,7 +24,7 @@
     {
       "id": "marvel",
       "name": "Marvel Comics (مارفل - عربي)",
-      "version": "3.4.0",
+      "version": "3.5.0",
       "lang": "ar",
       "nsfw": false,
       "entry": "marvel.plugin.js",
@@ -33,7 +33,7 @@
     {
       "id": "batman",
       "name": "Batman Universe (عالم باتمان - عربي)",
-      "version": "3.4.0",
+      "version": "3.5.0",
       "lang": "ar",
       "nsfw": false,
       "entry": "batman.plugin.js",
@@ -42,7 +42,7 @@
     {
       "id": "spiderman",
       "name": "Spider-Man Collection (سبايدرمان - عربي)",
-      "version": "3.4.0",
+      "version": "3.5.0",
       "lang": "ar",
       "nsfw": false,
       "entry": "spiderman.plugin.js",
@@ -51,7 +51,7 @@
     {
       "id": "indie",
       "name": "Indie & Sci-Fi (سلاسل وأبطال - عربي)",
-      "version": "3.4.0",
+      "version": "3.5.0",
       "lang": "ar",
       "nsfw": false,
       "entry": "indie.plugin.js",
@@ -60,16 +60,16 @@
     {
       "id": "ocecomic",
       "name": "OceComic (English Comics)",
-      "version": "3.4.0",
+      "version": "3.5.0",
       "lang": "en",
       "nsfw": false,
       "entry": "ocecomic.plugin.js",
-      "description": "Comprehensive Western comics in original English: Marvel, DC, Image, Dark Horse, Avatar Press"
+      "description": "Comprehensive Western comics in original English: Marvel, DC, Image, Dark Horse, Boom Studios"
     },
     {
       "id": "ocecomic-superhero",
       "name": "Western Heroes (English Superheroes)",
-      "version": "3.4.0",
+      "version": "3.5.0",
       "lang": "en",
       "nsfw": false,
       "entry": "ocecomic-superhero.plugin.js",

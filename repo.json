@@ -4,16 +4,25 @@
     {
       "id": "arcomixverse",
       "name": "ArComixVerse (عربي)",
-      "version": "2.0.0",
+      "version": "2.2.0",
       "lang": "ar",
       "nsfw": false,
       "icon": "https://arcomixverse.blogspot.com/favicon.ico",
       "entry": "arcomixverse.plugin.js"
     },
     {
+      "id": "arabcomics",
+      "name": "عرب كوميكس (ArabComics)",
+      "version": "2.2.0",
+      "lang": "ar",
+      "nsfw": false,
+      "icon": "https://arabcomics.net/wp-content/uploads/2020/09/cropped-ArabComics-Logo-192x192.png",
+      "entry": "arabcomics.plugin.js"
+    },
+    {
       "id": "comick-comics",
       "name": "ComicK Comics (English)",
-      "version": "2.0.0",
+      "version": "2.2.0",
       "lang": "en",
       "nsfw": false,
       "icon": "https://comick.live/favicon.ico",
@@ -22,11 +31,29 @@
     {
       "id": "webtoons",
       "name": "Webtoons (English)",
-      "version": "2.0.0",
+      "version": "2.2.0",
       "lang": "en",
       "nsfw": false,
       "icon": "https://www.webtoons.com/favicon.ico",
       "entry": "webtoons.plugin.js"
+    },
+    {
+      "id": "getcomics",
+      "name": "GetComics (English)",
+      "version": "2.2.0",
+      "lang": "en",
+      "nsfw": false,
+      "icon": "https://getcomics.org/wp-content/themes/getcomics/images/logo.png",
+      "entry": "getcomics.plugin.js"
+    },
+    {
+      "id": "globalcomix",
+      "name": "GlobalComix (English)",
+      "version": "2.2.0",
+      "lang": "en",
+      "nsfw": false,
+      "icon": "https://assets.globalcomix.com/static/images/header/homescreen-blaze-f82aeb.png",
+      "entry": "globalcomix.plugin.js"
     }
   ]
 }
